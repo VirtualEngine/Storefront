@@ -1,0 +1,8 @@
+[ClassVersion("1.0.0"), FriendlyName("SFAuthenticationService")]
+class VE_SFAuthenticationSerivce : OMI_BaseResource
+{
+    [Key, Description("IIS Virtual Path")] String VirtualPath;
+    [Write, Description("IIS Site Id")] Int64 SiteId;
+    [Write, Description("Authentication service friendly name")] String FriendlyName;
+    [Write, ValueMap{"Present", "Absent"}, Values{"Present", "Absent"}] String Ensure;
+};
