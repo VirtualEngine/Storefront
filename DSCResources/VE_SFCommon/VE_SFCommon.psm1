@@ -9,8 +9,11 @@ function ImportSFModule {
 #>
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory)] [ValidateNotNullOrEmpty()] [System.String[]] $Name,
-        [Parameter()] [System.Management.Automation.SwitchParameter] $IsSnapin
+        [Parameter(Mandatory)] [ValidateNotNullOrEmpty()]
+        [System.String[]] $Name,
+        
+        [Parameter()]
+        [System.Management.Automation.SwitchParameter] $IsSnapin
     )
     process {
         foreach ($moduleName in $Name) {
@@ -34,8 +37,11 @@ function TestSFModule {
 #>
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory)] [ValidateNotNullOrEmpty()] [System.String[]] $Name,
-        [Parameter()] [System.Management.Automation.SwitchParameter] $IsSnapin
+        [Parameter(Mandatory)] [ValidateNotNullOrEmpty()]
+        [System.String[]] $Name,
+        
+        [Parameter()]
+        [System.Management.Automation.SwitchParameter] $IsSnapin
     )
     process {
         $isCompliant = $true;
@@ -282,8 +288,11 @@ function AddInvokeScriptBlockCredentials {
     [CmdletBinding()]
     [OutputType([System.Collections.Hashtable])]
     param (
-        [Parameter(Mandatory)] [System.Collections.Hashtable] $Hashtable,
-        [Parameter(Mandatory)] [System.Management.Automation.PSCredential] $Credential
+        [Parameter(Mandatory)]
+        [System.Collections.Hashtable] $Hashtable,
+        
+        [Parameter(Mandatory)]
+        [System.Management.Automation.PSCredential] $Credential
     )
     process {
         $Hashtable['ComputerName'] = $env:COMPUTERNAME;
@@ -342,13 +351,20 @@ function StartWaitProcess {
     [OutputType([System.Int32])]
     param (
         # Path to process to start.
-        [Parameter(Mandatory)] [ValidateNotNullOrEmpty()] [System.String] $FilePath,
+        [Parameter(Mandatory)] [ValidateNotNullOrEmpty()]
+        [System.String] $FilePath,
+        
         # Arguments (if any) to apply to the process.
-        [Parameter()] [AllowNull()] [System.String[]] $ArgumentList,
+        [Parameter()] [AllowNull()]
+        [System.String[]] $ArgumentList,
+        
         # Credential to start the process as.
-        [Parameter()] [AllowNull()] [System.Management.Automation.PSCredential] $Credential,
+        [Parameter()] [AllowNull()]
+        [System.Management.Automation.PSCredential] $Credential,
+        
         # Working directory
-        [Parameter()] [ValidateNotNullOrEmpty()] [System.String] $WorkingDirectory = (Split-Path -Path $FilePath -Parent)
+        [Parameter()] [ValidateNotNullOrEmpty()]
+        [System.String] $WorkingDirectory = (Split-Path -Path $FilePath -Parent)
     )
     process {
         $startProcessParams = @{
@@ -381,14 +397,19 @@ function StartWaitProcess {
     } #end process
 } #end function StartWaitProcess
 
+
+
 function ThrowInvalidArgumentError {
     <#
     .SYNOPSIS
         Throws terminating error of category InvalidArgument with specified errorId and errorMessage.
     #>
     param(
-        [Parameter(Mandatory)] [System.String] $ErrorId,
-        [Parameter(Mandatory)] [System.String] $ErrorMessage
+        [Parameter(Mandatory)]
+        [System.String] $ErrorId,
+        
+        [Parameter(Mandatory)]
+        [System.String] $ErrorMessage
     )
     $errorCategory = [System.Management.Automation.ErrorCategory]::InvalidArgument;
     $exception = New-Object -TypeName 'System.ArgumentException' -ArgumentList $ErrorMessage;
@@ -402,8 +423,11 @@ function ThrowInvalidOperationException {
         Throws terminating error of category InvalidOperation with specified errorId and errorMessage.
     #>
     param(
-        [Parameter(Mandatory)] [System.String] $ErrorId,
-        [Parameter(Mandatory)] [System.String] $ErrorMessage
+        [Parameter(Mandatory)]
+        [System.String] $ErrorId,
+        
+        [Parameter(Mandatory)]
+        [System.String] $ErrorMessage
     )
     $errorCategory = [System.Management.Automation.ErrorCategory]::InvalidOperation;
     $exception = New-Object -TypeName 'System.InvalidOperationException' -ArgumentList $ErrorMessage;
@@ -417,8 +441,11 @@ function ThrowInvalidProgramException {
         Throws terminating error of category NotInstalled with specified errorId and errorMessage.
     #>
     param(
-        [Parameter(Mandatory)] [System.String] $ErrorId,
-        [Parameter(Mandatory)] [System.String] $ErrorMessage
+        [Parameter(Mandatory)]
+        [System.String] $ErrorId,
+        
+        [Parameter(Mandatory)]
+        [System.String] $ErrorMessage
     )
     $errorCategory = [System.Management.Automation.ErrorCategory]::NotInstalled;
     $exception = New-Object -TypeName 'System.InvalidProgramException' -ArgumentList $ErrorMessage;
@@ -432,8 +459,11 @@ function ThrowOperationCanceledException {
         Throws terminating error of category InvalidOperation with specified errorId and errorMessage.
     #>
     param(
-        [Parameter(Mandatory)] [System.String] $ErrorId,
-        [Parameter(Mandatory)] [System.String] $ErrorMessage
+        [Parameter(Mandatory)]
+        [System.String] $ErrorId,
+        
+        [Parameter(Mandatory)]
+        [System.String] $ErrorMessage
     )
     $errorCategory = [System.Management.Automation.ErrorCategory]::InvalidOperation;
     $exception = New-Object -TypeName 'System.OperationCanceledException' -ArgumentList $ErrorMessage;

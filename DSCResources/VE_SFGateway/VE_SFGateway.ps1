@@ -290,4 +290,3 @@ function Set-TargetResource {
         }
     } #end process
 } #end function Set-TargetResource
-
