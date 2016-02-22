@@ -1,9 +1,9 @@
 ﻿<# SFCommon\Resources.psd1 #>
-ConvertFrom-StringData @'    
+ConvertFrom-StringData @'
     StorefrontSDKNotFoundError                  = Citrix Storefront Powershell SDK/Snap-in was not found.
     InvalidStorefrontStoreError                 = Citrix Storefront store '{0}' was not found.
     InvalidStorefrontAuthenticationServiceError = Citrix Storefront authentication service '{0}' was not found.
-    
+
     RemovingDuplicateEntry  = Removing duplicate '{0}' entry.
     StartingProcess         = Starting process '{0}' with arguments '{1}'.
     StartingProcessAs       = Starting process with user credential '{0}'.

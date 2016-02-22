@@ -1,4 +1,4 @@
-<# SFCluster\Resources.psd1 #>
+<# SFStore\Resources.psd1 #>
 ConvertFrom-StringData @'
     ResourcePropertyMismatch    = Expected store property '{0}' to be '{1}', actual '{2}'.
     AddingStore                 = Adding Citrix Storefront store '{0}'.

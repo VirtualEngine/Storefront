@@ -1,4 +1,4 @@
-<# SFCluster\Resources.psd1 #>
+<# SFAuthenticationServiceMethod\Resources.psd1 #>
 ConvertFrom-StringData @'
     ResourcePropertyMismatch       = Expected authentication method property '{0}' to be '{1}', actual '{2}'.
     AddingAuthenticationMethod     = Adding Citrix Storefront authentication method '{0}'.

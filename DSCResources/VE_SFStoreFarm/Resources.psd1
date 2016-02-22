@@ -1,4 +1,4 @@
-<# SFCluster\Resources.psd1 #>
+<# SFStoreFarm\Resources.psd1 #>
 ConvertFrom-StringData @'
     ResourcePropertyMismatch    = Expected web receiver property '{0}' to be '{1}', actual '{2}'.
     UpdatingResourceProperty    = Updating web receiver '{0}' property to '{1}'.
