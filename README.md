@@ -12,36 +12,54 @@ Included Resources
 
 SFSimpleDeployment
 ==================
-Composite resource to deploy a simple StoreFront configuration
+Composite resource to deploy a simple Storefront configuration
 ###Syntax
 ```
 SFSimpleDeployment [string] #ResourceName
 {
     BaseUrl = [String]
     FarmName = [String]
-    FarmType = [String]
+    FarmType = [String] { XenApp | XenDesktop | VDIinaBox }
     Servers = [String[]]
     [ StoreVirtualPath = [String] ]
     [ AuthenticationVirtualPath = [String] ]
-    [ Transport = [String] ]
+    [ Transport = [String] ] { HTTP | HTTPS }
     [ ServicePort = [UInt32] ]
 }
 ```
+###Properties
+* **BaseUrl**: Storefront cluster/group base url, i.e. 'https://storefront.lab.local/'.
+* **FarmName**: The name of the Citrix XenDesktop 7.x Site or XenApp 6.5 farm to add to the Storefront group.
+* **FarmType**: The farm type.
+* **Servers**: The Citrix XenDesktop site delivery controller(s) or XenApp zone collector(s) to connect to.
+* **StoreVirtualPath**: The Citrix Storefront store virtual path.
+ * If not specified, it defaults to '/Citrix/Store'.
+* **AuthenticationVirtualPath**: The Citrix Storefront authentication service virtual path.
+ * If not specified, it defaults to '/Citrix/Authentication'.
+* **Transport**: The Citrix XenDesktop/XenApp XML service transport protocol.
+ * If not specified, it defaults to HTTP.
+* **ServicePort**: The Citrix XenDesktop/XenApp XML service TCP port.
+ * If not specified, it defaults to 80 for HTTP.
 
 SFAuthenticationService
 =======================
-Adds an authentication service to a Citrix StoreFront group/cluster.
+Adds an authentication service to a Citrix Storefront group/cluster.
 ###Syntax
 ```
 SFAuthenticationService [string] #ResourceName
 {
     VirtualPath = [string]
-    [ DependsOn = [string[]] ]
-    [ Ensure = [string] { Absent | Present }  ]
-    [ FriendlyName = [string] ]
     [ SiteId = [UInt64] ]
+    [ FriendlyName = [string] ]
+    [ Ensure = [string] { Absent | Present } ]
 }
 ```
+###Properties
+* **VirtualPath**: The Citrix Storefront authentication service virtual path.
+* **SiteId**: Citrix Storefront site id.
+ * If not specified, it defaults to '1'.
+* **FriendlyName**: The friendly name of the Citrix Storefront authentication service.
+* **Ensure**: Whether the Storefront authentication service should be added or removed.
 
 SFAuthenticationServiceMethod
 =============================
@@ -52,86 +70,60 @@ SFAuthenticationServiceMethod [string] #ResourceName
 {
     VirtualPath = [string]
     [ AuthenticationMethods = [string[]] { Certificate | CitrixAGBasic | CitrixFederation | ExplicitForms | HttpBasic | IntegratedWindows } ]
-    [ DependsOn = [string[]] ]
-    [ Ensure = [string] { Absent | Present }  ]
-    [ ExcludeAuthenticationMethods = [string[]] { Certificate | CitrixAGBasic | CitrixFederation | ExplicitForms | Http | Basic | IntegratedWindows } ]
     [ IncludeAuthenticationMethods = [string[]] { Certificate | CitrixAGBasic | CitrixFederation | ExplicitForms | Http | Basic | IntegratedWindows } ]
+    [ ExcludeAuthenticationMethods = [string[]] { Certificate | CitrixAGBasic | CitrixFederation | ExplicitForms | Http | Basic | IntegratedWindows } ]
+    [ Ensure = [string] { Absent | Present } ]
 }
 ```
+###Properties
+* **VirtualPath**: The Citrix Storefront authentication service virtual path.
+* **AuthenticationMethods**: Explicit authentication methods be made available.
+* **IncludeAuthenticationMethods**: Authentication methods to be added, existing authentication methods will not be removed.
+* **ExcludeAuthenticationMethods**: Authentication methods to be removed, existing authentication methods will not be removed.
+* **Ensure**: Whether the Storefront authentication service method should be added or removed.
 
 SFCluster
 ===========
 Creates a Citrix Storefront group/cluster.
 ###Syntax
 ```
-SFCluster [string] #ResourceName
+SFCluster [String] #ResourceName
 {
-    DeliveryGroup = [string]
-    AccessType = [string] { AccessGateway | Direct }
-    [Enabled = [bool]]
-    [AllowRestart = [bool]]
-    [Name = [string]]
-    [Description = [string]]
-    [Protocol = [string[]] { HDX | RDP }
-    [IncludeUsers = [string[]]
-    [ExcludeUsers = [string[]]
-    [Ensure = [string]] { Present | Absent }
-    [Credential = [PSCredential]]
+    BaseUrl = [string]
+    [ SiteId = [UInt64] ]
+    [ Ensure = [string] { Absent | Present } ]
 }
 ```
 ###Properties
-* **DeliveryGroup**: The Citrix XenDesktop 7.x delivery group name to assign the access policy.
-* **AccessType**: The access policy filter type.
-* **Enabled**: Whether the access policy is enabled. If not specified, it defaults to True.
-* **AllowRestart**: Whether users are permitted to restart desktop group machines. If not specified, it defaults to True.
-* **Name**: Name of the access policy. If not specified, it defaults to DesktopGroup_Direct or DesktopGroup_AG.
-* **Description**: Custom description assigned to the access policy rule.
-* **Protocol**: Permitted protocols. If not specified, it defaults to both HDX and RDP.
-* **IncludeUsers**: List of associated Active Directory user and groups assigned to the access policy.
-* **ExcludeUsers**: List of associated Active Directory user and groups excluded from the access policy.
-* **Ensure**: Whether the role is to be installed or not. Supported values are Present or Absent. If not specified, it defaults to Present.
-* **Credential**: Specifies optional credential of a user which has permissions to access the source media and/or install/uninstall the specified role. __This property is required for Powershell 4.0.__
-
-###Configuration
-```
-Configuration XD7AccessPolicyExample {
-    Import-DscResource -ModuleName CitrixXenDesktop7
-    XD7AccessPolicy XD7MyDesktopGroupAccessPolicy {
-        DeliveryGroup = 'My Desktop Group'
-        AccessType = 'AccessGateway'
-        Enabled = $true
-        AllowRestart = $true
-        Protocol = 'HDX'
-        IncludeUsers = @('DOMAIN\GroupA','DOMAIN\GroupB')
-        Ensure = 'Present'
-    }
-}
-```
+* **BaseUrl**: Storefront cluster/group base url, i.e. 'https://storefront.lab.local/'.
+* **SiteId**: Citrix Storefront site id.
+ * If not specified, it defaults to '1'.
+* **Ensure**: Whether the Storefront group/cluster is to be installed or not. Supported values are Present or Absent. If not specified, it defaults to Present.
 
 SFFeature
 =========
 Installs Citrix StoreFront.
 ###Syntax
 ```
-SFFeature [string] #ResourceName
+SFFeature [String] #ResourceName
 {
     Path = [string]
-    [DestinationPath = [string]]
-    [WindowsClientPath = [string]]
-    [MacClientPath = [string]]
-    [Ensure = [string]] { Present | Absent }
-    [Credential = [PSCredential]]
+    [ DestinationPath = [string] ]
+    [ WindowsClientPath = [string] ]
+    [ MacClientPath = [string] ]
+    [ Credential = [PSCredential] ]
+    [ Ensure = [string]{ Absent | Present } ]
 }
 ```
 ###Properties
-* **Path**: Path to the Citrix StoreFront installation executable.
-* **DestinationPath**: Local path to install Citrix StoreFront into to.
- * If not specified, Citrix StoreFront is installed in the default location.
+* **Path**: Path to the Citrix Storefront installation executable.
+* **DestinationPath**: Local path to install Citrix Storefront into to.
+ * If not specified, Citrix Storefront is installed in the default location.
 * **WindowsClientPath**: Copies Receiver for Windows installation file specified to the appropriate location in your StoreFront deployment.
 * **WindowsClientPath**: Copies Receiver for Mac installation file specified to the appropriate location in your StoreFront deployment.
+* **Credential**: Specifies optional credential of a user which has permissions to access the source installation file.
 * **Ensure**: Whether the role is to be installed or not.
  * If not specified, it defaults to Present.
-* **Credential**: Specifies optional credential of a user which has permissions to access the source installation file.
 
 ###Configuration
 ```
@@ -149,14 +141,12 @@ SFGateway
 Adds a NetScaler Gateway to the Citrix StoreFront group/cluster.
 ###Syntax
 ```
-SFGateway [string] #ResourceName
+SFGateway [String] #ResourceName
 {
-    LogonType = [string] { Domain | DomainAndRSA | GatewayKnows | None | RSA | SmartCard | SMS | UsedForHDXOnly }
     Name = [string]
     Url = [string]
+    LogonType = [string] { Domain | DomainAndRSA | GatewayKnows | None | RSA | SmartCard | SMS | UsedForHDXOnly }
     [ CallbackUrl = [string] ]
-    [ DependsOn = [string[]] ]
-    [ Ensure = [string] { Absent | Present } ]
     [ RequestTicketTwoSTAs = [bool] ]
     [ SecureTicketAuthorityUrls = [string[]] ]
     [ SessionReliability = [bool] ]
@@ -164,40 +154,62 @@ SFGateway [string] #ResourceName
     [ StasBypassDuration = [UInt32] ]
     [ StasUseLoadBalancing = [bool] ]
     [ SubnetIPAddress = [string] ]
+    [ Ensure = [string] { Absent | Present } ]
 }
 ```
+###Properties
+* **Name**: NetScaler gateway display name.
+* **Url**: NetScaler gateway external Url.
+* **LogonType**: Login type required and supported by the Gateway.
+ * Valid values are: UsedForHDXOnly, Domain, RSA, DomainAndRSA, SMS, GatewayKnows, SmartCard, None.
+* **CallbackUrl**: NetScaler gateway authentication NetScaler call-back Url.
+* **RequestTicketTwoSTAs**: Request STA tickets from two STA servers (requires two STA servers).
+* **SecureTicketAuthorityUrls**: Secure Ticket Authority server Urls.
+* **SessionReliability**: Enable session reliability.
+* **SmartCardFallbackLogonType**: Login type to use when SmartCard fails.
+ * Valid values are: UsedForHDXOnly, Domain, RSA, DomainAndRSA, SMS, GatewayKnows, SmartCard, None.
+* **StasBypassDuration**: Time before retrying a failed STA server (seconds).
+* **StasUseLoadBalancing**: Load balance between the configured STA servers (requires two or more STA servers).
+* **SubnetIPAddress**: NetScaler subnet IP address.
+* **Ensure**: Whether the role is to be installed or not.
+ * If not specified, it defaults to Present.
 
 SFStore
 =======
 Adds a store to the Citrix StoreFront group/cluster.
 ###Syntax
 ```
-SFStore [string] #ResourceName
+SFStore [String] #ResourceName
 {
-    AuthenticationServiceVirtualPath = [string]
     VirtualPath = [string]
-    [ DependsOn = [string[]] ]
-    [ Ensure = [string] { Absent | Present } ]
-    [ FriendlyName = [string] ]
+    AuthenticationServiceVirtualPath = [string]
     [ SiteId = [UInt64] ]
+    [ FriendlyName = [string] ]
+    [ Ensure = [string] { Absent | Present } ]
 }
 ```
+###Properties
+* **VirtualPath**: Citrix Storefront store virtual path, e.g. '/Citrix/Store'.
+* **AuthenticationServiceVirtualPath**: Citrix Storefront store's authentication service virtual path.
+* **SiteId**: Citrix Storefront store site id.
+ * If not specified, it defaults to '1'.
+* **FriendlyName**: Citrix Storefront store friendly name.
+* **Ensure**: Whether the Citrix Storefront store should be added or removed.
+ * If not specified, it defaults to Present.
 
 SFStoreFarm
 ===========
 Adds a XenApp/XenDesktop farm/site to an existing Citrix StoreFront store.
 ###Syntax
 ```
-SFStoreFarm [string] #ResourceName
+SFStoreFarm [String] #ResourceName
 {
+    StoreVirtualPath = [string]
     FarmName = [string]
     FarmType = [string] { AppController | VDIinaBox | XenApp | XenDesktop }
     Servers = [string[]]
-    StoreVirtualPath = [string]
     [ AllFailedBypassDuration = [UInt32] ]
     [ BypassDuration = [UInt32] ]
-    [ DependsOn = [string[]] ]
-    [ Ensure = [string] { Absent | Present } ]
     [ LoadBalance = [bool] ]
     [ MaxFailedServersPerRequest = [UInt32] ]
     [ RadeTicketTimeToLive = [UInt32] ]
@@ -205,21 +217,50 @@ SFStoreFarm [string] #ResourceName
     [ SSLRelayServicePort = [UInt32] ]
     [ TicketTimeToLive = [UInt32] ]
     [ TransportType = [string] { HTTP | HTTPS | SSL } ]
+    [ Ensure = [string] { Absent | Present } ]
 }
 ```
+###Properties
+* **StoreVirtualPath**: Store virtual directory to add the farm to, e.g. '/Citrix/Store'.
+* **FarmName**: Citrix XenDesktop/XenApp farm (display) name.
+* **FarmType**: Citrix XenDesktop/XenApp farm type.
+ * Valid values are: XenApp, XenDesktop, AppController, VDIinaBox.
+* **Servers**: The Citrix XenDesktop site delivery controller(s) or XenApp zone collector(s) to connect to.
+* **AllFailedBypassDuration**: Period of time to skip all xml service requests should all servers fail to respond.
+* **BypassDuration**: Period of time to skip a server when is fails to respond.
+* **LoadBalance**: Round robin load balance the xml service servers.
+* **MaxFailedServersPerRequest**: Maximum number of servers within a single farm that can fail before aborting a request.
+* **RadeTicketTimeToLive**: Period of time a RADE launch ticket is valid once requested on pre 7.0 XenApp and XenDesktop farms.
+* **ServicePort**: Xml service communication port.
+ * If not specified, defaults to 443.
+* **SSLRelayServicePort**: Xml service communication port.
+ * If not specified, defaults to 443.
+* **TicketTimeToLive**: Period of time an ICA launch ticket is valid once requested on pre 7.0 XenApp and XenDesktop farms.
+* **TransportType**: Xml service transport type.
+ * Valid values are: HTTP, HTTPS, SSL.
+* **Ensure**: Whether the Citrix Storefront farm should be added or removed.
+ * If not specified, it defaults to Present.
 
 SFStoreWebReceiver
 ==================
 Adds a Web Receiver site to an existing Citrix StoreFront store.
 ###Syntax
 ```
-SFStoreWebReceiver [string] #ResourceName
+SFStoreWebReceiver [String] #ResourceName
 {
     StoreVirtualPath = [string]
-    [ ClassicReceiver = [bool] ]
-    [ DependsOn = [string[]] ]
-    [ Ensure = [string] { Absent | Present } ]
-    [ SiteId = [UInt64] ]
     [ VirtualPath = [string] ]
+    [ SiteId = [UInt64] ]
+    [ ClassicReceiver = [bool] ]
+    [ Ensure = [string] { Absent | Present } ]
 }
 ```
+###Properties
+* **StoreVirtualPath**: Store virtual directory to add Receiver for Web, e.g. '/Citrix/Store'.
+* **VirtualPath**: Receiver for Web virtual path, e.g. '/Citrix/StoreWeb'.
+ * If not specified, it defaults to (StoreVirtualPath)Web.
+* **SiteId**: Citrix Storefront site id.
+ * If not specified, it defaults to '1'.
+* **ClassicReceiver**: Enable the classic (green bubble) Receiver for Web experience.
+* **Ensure**: Whether the Citrix Storefront Receiver for Web should be added or removed.
+ * If not specified, it defaults to Present.
