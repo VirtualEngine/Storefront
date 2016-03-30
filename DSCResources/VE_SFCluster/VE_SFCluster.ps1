@@ -19,7 +19,7 @@ function Get-TargetResource {
         $stfDeployment = Get-STFDeployment -SiteId $SiteId -WarningAction SilentlyContinue;
         $targetResource = @{
             BaseUrl = $stfDeployment.HostbaseUrl;
-            SiteId = $stfDeployment.IISSiteId;
+            SiteId = $stfDeployment.SiteId;
             Ensure = if ($stfDeployment) { 'Present' } else { 'Absent' };
         }
         return $targetResource;
