@@ -45,7 +45,7 @@ SFAuthenticationService [string] #ResourceName
 
 SFAuthenticationServiceMethod
 =============================
-Configures authentication methods available on an existing Citrix StoreFront store.  
+Configures authentication methods available on an existing Citrix StoreFront store.
 ###Syntax
 ```
 SFAuthenticationServiceMethod [string] #ResourceName
@@ -208,8 +208,8 @@ SFStoreFarm [string] #ResourceName
 }
 ```
 
-SFStoreFarm
-===========
+SFStoreWebReceiver
+==================
 Adds a Web Receiver site to an existing Citrix StoreFront store.
 ###Syntax
 ```

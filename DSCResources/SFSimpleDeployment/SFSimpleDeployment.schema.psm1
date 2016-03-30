@@ -2,8 +2,8 @@ configuration SFSimpleDeployment {
     param (
         ## Path to StoreFront installation executable
         [Parameter(Mandatory)] [ValidateNotNullOrEmpty()]
-        [System.String] $Path
-        
+        [System.String] $Path,
+
         ## Storefront base Uri, e.g. https://storefront.lab.local
         [Parameter(Mandatory)] [ValidateNotNullOrEmpty()]
         [System.String] $BaseUrl,
@@ -31,7 +31,7 @@ configuration SFSimpleDeployment {
         ## Xml service transport type
         [Parameter()] [ValidateSet('HTTP','HTTPS')]
         [System.String] $Transport = 'HTTP',
-        
+
         ## Xml service port
         [Parameter()] [ValidateNotNull()]
         [System.UInt32] $ServicePort = (& { if ($Transport -eq 'HTTPS') { 443 } else { 80 } })
@@ -41,11 +41,11 @@ configuration SFSimpleDeployment {
     Import-DscResource -Name VE_SFFeature, VE_SFCluster, VE_SFAuthenticationService, VE_SFStore, VE_SFStoreWebReceiver, VE_SFStoreFarm;
 
     $prefix = $BaseUrl.Replace('/','').Replace(':','');
-    
+
     SFFeature "$($prefix)Feature" {
         Path = $Path;
-    } 
-    
+    }
+
     SFCluster "$($prefix)Group" {
         BaseUrl = $BaseUrl;
     }
@@ -74,4 +74,5 @@ configuration SFSimpleDeployment {
         TransportType = $Transport;
         ServicePort = $ServicePort;
     }
+
 }
