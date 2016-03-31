@@ -9,4 +9,12 @@
     CLRVersion = '4.0';
     FunctionsToExport = '*';
     CmdletsToExport = '*';
+    PrivateData = @{
+        PSData = @{
+            Tags = @('VirtualEngine','Citrix','Storefront','DSC');
+            LicenseUri = 'https://github.com/VirtualEngine/Storefront/blob/master/LICENSE';
+            ProjectUri = 'https://github.com/VirtualEngine/Storefront';
+            IconUri = 'https://raw.githubusercontent.com/VirtualEngine/Storefront/master/CitrixReceiver.png';
+        } # End of PSData hashtable
+    } # End of PrivateData hashtable
 }
