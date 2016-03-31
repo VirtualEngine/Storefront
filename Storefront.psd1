@@ -10,7 +10,7 @@
     FunctionsToExport = @('Get-TargetResource', 'Set-TargetResource', 'Test-TargetResource');
     NestedModules = @('VE_SFAuthenticationService', 'VE_SFAuthenticationServiceMethod', 'VE_SFCluster', 'VE_SFFeature',
                         'VE_SFGateway', 'VE_SFStore', 'VE_SFStoreFarm', 'VE_SFStoreWebReceiver');
-    CmdletsToExport = '*';
+    DscResourcesToExport = @('SFSimpleDeployment');
     PrivateData = @{
         PSData = @{
             Tags = @('VirtualEngine','Citrix','Storefront','DSC');
