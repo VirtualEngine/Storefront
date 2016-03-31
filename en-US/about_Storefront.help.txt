@@ -1,0 +1,31 @@
+TOPIC
+    about_Storefront
+
+SHORT DESCRIPTION
+    Open source PowerShell Desired State Configuration (DSC) resources for Citrix Storefront 3.5 (and later).
+
+LONG DESCRIPTION
+    The Storefront DSC resources can be used to deploy Citrix Storefront v3.5 via PowerShell Desired State Configuration (DSC).
+
+    This module contains the following DSC resources:
+
+    * SFAuthenticationService - Adds a Citrix Storefront authentication service to a Citrix Storefront store.
+    * SFAuthenticationServiceMethod - Adds an authentication method to a Citrix Storefront authentication service.
+    * SFCluster - Creates a Citrix Storefront group/cluster.
+    * SFFeature - Installs Citrix Storefront role.
+    * SFGateway - Adds a Citrix NetScaler gateway to a Citrix Storefront group/cluster.
+    * SFStore - Creates a Citrix Storefront store.
+    * SFStoreFarm - Adds a Citrix XenDesktop/XenApp farm to a Citrix Storefront store.
+    * SFStoreWebReceiver - Installs Citrix Storefront web receiver.
+
+    This module contains the following compsite DSC resources:
+
+    * SFSimpleDeployment - Creates a simple Citrix Storefront store deployment.
+
+CREDITS
+
+    Image attribution
+    http://osullivanluke.deviantart.com/art/ORB-OS-X-Icon-Pack-by-Luke-O-Sullivan-UPDATEDx2-455360778
+
+KEYWORDS
+    DSC, DSC Resource, Citrix, Storefront
