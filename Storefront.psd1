@@ -7,7 +7,9 @@
     Description = 'The Storefront DSC resources can automate the deployment and configuration of Citrix Storefront 3.5. These DSC resources are provided AS IS, and are not supported through any means.'
     PowerShellVersion = '4.0';
     CLRVersion = '4.0';
-    FunctionsToExport = '*';
+    FunctionsToExport = @('Get-TargetResource', 'Set-TargetResource', 'Test-TargetResource');
+    NestedModules = @('VE_SFAuthenticationService', 'VE_SFAuthenticationServiceMethod', 'VE_SFCluster', 'VE_SFFeature',
+                        'VE_SFGateway', 'VE_SFStore', 'VE_SFStoreFarm', 'VE_SFStoreWebReceiver');
     CmdletsToExport = '*';
     PrivateData = @{
         PSData = @{
