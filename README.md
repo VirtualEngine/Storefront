@@ -162,7 +162,7 @@ SFGateway [String] #ResourceName
 * **Url**: NetScaler gateway external Url.
 * **LogonType**: Login type required and supported by the Gateway.
  * Valid values are: UsedForHDXOnly, Domain, RSA, DomainAndRSA, SMS, GatewayKnows, SmartCard, None.
-* **CallbackUrl**: NetScaler gateway authentication NetScaler call-back Url.
+* **CallbackUrl**: NetScaler gateway authentication NetScaler call-back Url. The  'CallbackUrl' DSC param has to include the /CitrixAuthService/AuthService.asmx (example : http://callback.domain.net/CitrixAuthService/AuthService.asmx) 
 * **RequestTicketTwoSTAs**: Request STA tickets from two STA servers (requires two STA servers).
 * **SecureTicketAuthorityUrls**: Secure Ticket Authority server Urls.
 * **SessionReliability**: Enable session reliability.
