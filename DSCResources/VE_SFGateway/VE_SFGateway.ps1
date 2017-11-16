@@ -80,7 +80,7 @@ function Get-TargetResource {
             StasUseLoadBalancing = $gateway.StasUseLoadBalancing;
             StasBypassDuration = $gateway.StasBypassDuration.TotalSeconds;
             SubnetIPAddress = $gateway.IpAddress;
-            SecureTicketAuthorityUrls = @($gateway.SecureTicketAuthorityUrls.AbsoluteUri);
+            SecureTicketAuthorityUrls = @($gateway.SecureTicketAuthorityUrls.Url.AbsoluteUri);
             Ensure = if ($gateway) { 'Present' } else { 'Absent' };
         }
         return $targetResource;
