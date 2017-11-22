@@ -9,9 +9,10 @@ function ImportSFModule {
 #>
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory)] [ValidateNotNullOrEmpty()]
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
         [System.String[]] $Name,
-        
+
         [Parameter()]
         [System.Management.Automation.SwitchParameter] $IsSnapin
     )
@@ -37,9 +38,10 @@ function TestSFModule {
 #>
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory)] [ValidateNotNullOrEmpty()]
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
         [System.String[]] $Name,
-        
+
         [Parameter()]
         [System.Management.Automation.SwitchParameter] $IsSnapin
     )
@@ -65,7 +67,8 @@ function RemoveDuplicateArrayMembers {
     [CmdletBinding()]
     [OutputType([System.String[]])]
     param (
-        [Parameter(Mandatory)] [ValidateNotNullOrEmpty()]
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
         [System.String[]] $Members
     )
     process {
@@ -80,18 +83,18 @@ function RemoveDuplicateArrayMembers {
                     continue;
                 }
             }
-    
+
             if(-not $matchFound) {
                 $Members[$destIndex++] = $Members[$sourceIndex].ToLowerInvariant();
             }
         }
-    
+
         # Create the output array.
         $destination = New-Object -TypeName System.String[] -ArgumentList $destIndex;
-    
+
         # Copy only distinct elements from the original array to the destination array.
         [System.Array]::Copy($Members, $destination, $destIndex);
-    
+
         return $destination;
     } #end process
 } #end function RemoveDuplicateMembers
@@ -99,10 +102,13 @@ function RemoveDuplicateArrayMembers {
 function TestStringArrayEqual {
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory)] [ValidateNotNullOrEmpty()]
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
         [System.String[]] $Expected,
-        
-        [Parameter(Mandatory)] [AllowNull()]
+
+        [Parameter(Mandatory)]
+        [AllowNull()]
+        [AllowEmptyString()]
         [System.String[]] $Actual
     )
     process {
@@ -115,7 +121,7 @@ function TestStringArrayEqual {
             }
         }
         if ($null -eq $Actual) {
-            ## $Expected cannot be $null so it $Actual is $null..
+            ## $Expected cannot be $null so if $Actual is $null..
             $inDesiredState = $false;
         }
         else {
@@ -155,7 +161,7 @@ function GetStoreFarm {
 function GetWebReceiverService {
 <#
     .SYNOPSIS
-        Returns Storefront WebReceiver store by virtual path and site Id (if supplied)      
+        Returns Storefront WebReceiver store by virtual path and site Id (if supplied)
 #>
     [CmdletBinding()]
     param (
@@ -182,7 +188,7 @@ function GetWebReceiverService {
 function GetStoreService {
 <#
     .SYNOPSIS
-        Returns Storefront store by virtual path and site Id (if supplied)      
+        Returns Storefront store by virtual path and site Id (if supplied)
 #>
     [CmdletBinding()]
     param (
@@ -218,7 +224,7 @@ function GetStoreService {
         if ($ThrowIfNull -and ($null -eq $store)) {
             $errorMessage = $localizedData.InvalidStorefrontStoreError -f $getSTFStoreServiceParams.VirtualPath;
             ThrowOperationCanceledException -ErrorId InvalidStore -ErrorMessage $errorMessage;
-        } 
+        }
         return $store;
     } #end process
 } #end function GetStoreService
@@ -226,7 +232,7 @@ function GetStoreService {
 function GetAuthenticationService {
 <#
     .SYNOPSIS
-    Returns Storefront authentication service by virtual path and site Id (if supplied)      
+    Returns Storefront authentication service by virtual path and site Id (if supplied)
 #>
     [CmdletBinding()]
     param (
@@ -253,7 +259,7 @@ function GetAuthenticationService {
         if ($ThrowIfNull -and ($null -eq $authenticationService)) {
             $errorMessage = $localizedData.InvalidStorefrontAuthenticationServiceError -f $VirtualPath;
             ThrowOperationCanceledException -ErrorId InvalidAuthenticationService -ErrorMessage $errorMessage;
-        } 
+        }
         return $authenticationService;
     } #end process
 } #end function GetAuthenticationService
@@ -261,13 +267,13 @@ function GetAuthenticationService {
 function GetAuthenticationServiceMethods {
 <#
     .SYNOPSIS
-    Returns Storefront authentication service methods by virtual path    
+    Returns Storefront authentication service methods by virtual path
 #>
     [CmdletBinding()]
     param (
         [Parameter(Mandatory)]
         [System.String] $VirtualPath,
-        
+
         [Parameter(ValueFromRemainingArguments)]
         $RemainingArguments
     )
@@ -290,7 +296,7 @@ function AddInvokeScriptBlockCredentials {
     param (
         [Parameter(Mandatory)]
         [System.Collections.Hashtable] $Hashtable,
-        
+
         [Parameter(Mandatory)]
         [System.Management.Automation.PSCredential] $Credential
     )
@@ -327,9 +333,15 @@ function GetRegistryValue {
     [CmdletBinding(SupportsShouldProcess)]
     param (
         # Registry key name/path to query.
-        [Parameter(Mandatory)] [ValidateNotNullOrEmpty()] [Alias('Path')] [System.String] $Key,
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [Alias('Path')]
+        [System.String] $Key,
+
         # Registry value to return.
-        [Parameter(Mandatory)] [ValidateNotNullOrEmpty()] [System.String] $Name
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [System.String] $Name
     )
     process {
         $itemProperty = Get-ItemProperty -Path $Key -Name $Name -ErrorAction SilentlyContinue;
@@ -351,19 +363,23 @@ function StartWaitProcess {
     [OutputType([System.Int32])]
     param (
         # Path to process to start.
-        [Parameter(Mandatory)] [ValidateNotNullOrEmpty()]
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
         [System.String] $FilePath,
-        
+
         # Arguments (if any) to apply to the process.
-        [Parameter()] [AllowNull()]
+        [Parameter()]
+        [AllowNull()]
         [System.String[]] $ArgumentList,
-        
+
         # Credential to start the process as.
-        [Parameter()] [AllowNull()]
+        [Parameter()]
+        [AllowNull()]
         [System.Management.Automation.PSCredential] $Credential,
-        
+
         # Working directory
-        [Parameter()] [ValidateNotNullOrEmpty()]
+        [Parameter()]
+        [ValidateNotNullOrEmpty()]
         [System.String] $WorkingDirectory = (Split-Path -Path $FilePath -Parent)
     )
     process {
@@ -407,7 +423,7 @@ function ThrowInvalidArgumentError {
     param(
         [Parameter(Mandatory)]
         [System.String] $ErrorId,
-        
+
         [Parameter(Mandatory)]
         [System.String] $ErrorMessage
     )
@@ -425,7 +441,7 @@ function ThrowInvalidOperationException {
     param(
         [Parameter(Mandatory)]
         [System.String] $ErrorId,
-        
+
         [Parameter(Mandatory)]
         [System.String] $ErrorMessage
     )
@@ -443,7 +459,7 @@ function ThrowInvalidProgramException {
     param(
         [Parameter(Mandatory)]
         [System.String] $ErrorId,
-        
+
         [Parameter(Mandatory)]
         [System.String] $ErrorMessage
     )
@@ -461,7 +477,7 @@ function ThrowOperationCanceledException {
     param(
         [Parameter(Mandatory)]
         [System.String] $ErrorId,
-        
+
         [Parameter(Mandatory)]
         [System.String] $ErrorMessage
     )
