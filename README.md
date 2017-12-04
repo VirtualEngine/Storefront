@@ -248,7 +248,7 @@ SFStoreFarm [String] #ResourceName
     [ LoadBalance = [bool] ]
     [ MaxFailedServersPerRequest = [UInt32] ]
     [ RadeTicketTimeToLive = [UInt32] ]
-    [ ServicePort = [UInt32] ]
+    [ Port = [UInt32] ]
     [ SSLRelayServicePort = [UInt32] ]
     [ TicketTimeToLive = [UInt32] ]
     [ TransportType = [string] { HTTP | HTTPS | SSL } ]
@@ -268,7 +268,7 @@ SFStoreFarm [String] #ResourceName
 * **LoadBalance**: Round robin load balance the xml service servers.
 * **MaxFailedServersPerRequest**: Maximum number of servers within a single farm that can fail before aborting a request.
 * **RadeTicketTimeToLive**: Period of time a RADE launch ticket is valid once requested on pre 7.0 XenApp and XenDesktop farms.
-* **ServicePort**: Xml service communication port.
+* **Port**: Xml service communication port.
   * If not specified, defaults to 443.
 * **SSLRelayServicePort**: Xml service communication port.
   * If not specified, defaults to 443.
