@@ -13,7 +13,7 @@ $mutableProperties = @( # Properties that can be successfully updated
     'AllFailedBypassDuration',
     'LoadBalance',
     'TicketTimeToLive',
-    'ServicePort',
+    'Port',
     'Servers'
 );
 
@@ -39,7 +39,7 @@ function Get-TargetResource {
 
         ## Xml service communication port, defaults to 443
         [Parameter()] [ValidateNotNull()]
-        [System.UInt32] $ServicePort = 443,
+        [System.UInt32] $Port = 443,
 
         ## Xml service transport type
         [Parameter()] [ValidateSet('HTTP','HTTPS','SSL')]
@@ -83,7 +83,7 @@ function Get-TargetResource {
             StoreVirtualPath = $StoreVirtualPath;
             FarmName = $farm.FarmName;
             FarmType = $farm.FarmType;
-            ServicePort = $farm.Port;
+            Port = $farm.Port;
             SSLRelaryServicePort = $farm.SSLRelayPort;
             TransportType = $farm.TransportType;
             LoadBalance = $farm.LoadBalance;
@@ -121,7 +121,7 @@ function Test-TargetResource {
 
         ## Xml service communication port, defaults to 443
         [Parameter()] [ValidateNotNull()]
-        [System.UInt32] $ServicePort = 443,
+        [System.UInt32] $Port = 443,
 
         ## Xml service transport type
         [Parameter()] [ValidateSet('HTTP','HTTPS','SSL')]
@@ -236,7 +236,7 @@ function Set-TargetResource {
 
         ## Xml service communication port, defaults to 443
         [Parameter()] [ValidateNotNull()]
-        [System.UInt32] $ServicePort = 443,
+        [System.UInt32] $Port = 443,
 
         ## Xml service transport type
         [Parameter()] [ValidateSet('HTTP','HTTPS','SSL')]
