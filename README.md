@@ -11,6 +11,7 @@
 * SFStore
 * SFStoreFarm
 * SFStoreWebReceiver
+* SFStoreRegisterGateway
 
 ## SFSimpleDeployment ##
 
@@ -304,4 +305,35 @@ SFStoreWebReceiver [String] #ResourceName
   * If not specified, it defaults to '1'.
 * **ClassicReceiver**: Enable the classic (green bubble) Receiver for Web experience.
 * **Ensure**: Whether the Citrix Storefront Receiver for Web should be added or removed.
+  * If not specified, it defaults to Present.
+
+## SFStoreRegisterGateway ##
+
+Register a Netscaler Gateway with an existing Citrix StoreFront store for use when users access StoreFront from the internet.
+
+### Syntax ###
+
+```
+SFStoreRegisterGateway [String] #ResourceName
+{
+    StoreVirtualPath = [string]
+	Gateway = [string]
+    [ SiteId = [UInt16] ]
+    [ DefaultGateway = [bool] ]
+	[ UseFullVpn = [bool] ]
+    [ Ensure = [string] { Absent | Present } ]
+}
+```
+
+### Properties ###
+
+* **StoreVirtualPath**: Store virtual directory to register Netscaler Gateway with.
+* **Gateway**: Netscaler Gateway name to register.
+* **SiteId**: Citrix Storefront site id.
+  * If not specified, it defaults to '1'.
+* **DefaultGateway**: Use this Gateway as the default if more than one is defined ?
+  * If not specified, it defaults to '$true'.
+* **UseFullVpn**: Use full VPN access when accessing the Store through this Gateway ?
+  * If not specified, it defaults to '$false'.
+* **Ensure**: Whether the Netscaler Gateway should be registered or unregistered from the store.
   * If not specified, it defaults to Present.

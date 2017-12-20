@@ -1,5 +1,5 @@
 @{
-    ModuleVersion = '0.9.5';
+    ModuleVersion = '0.9.6';
     GUID = 'c35b6b1e-43af-4000-b157-34bc6e79d801';
     Author = 'Iain Brighton';
     CompanyName = 'Virtual Engine';
@@ -8,7 +8,7 @@
     PowerShellVersion = '4.0';
     CLRVersion = '4.0';
     DscResourcesToExport = @('SFAuthenticationService', 'SFAuthenticationServiceMethod', 'SFCluster', 'SFFeature',
-                                'SFGateway', 'SFStore', 'SFStoreFarm', 'SFStoreWebReceiver', 'SFSimpleDeployment');
+                                'SFGateway', 'SFStore', 'SFStoreFarm', 'SFStoreWebReceiver', 'SFStoreRegisterGateway', 'SFSimpleDeployment');
     PrivateData = @{
         PSData = @{
             Tags = @('VirtualEngine','Citrix','Storefront','DSC');
