@@ -317,10 +317,10 @@ Register a Netscaler Gateway with an existing Citrix StoreFront store for use wh
 SFStoreRegisterGateway [String] #ResourceName
 {
     StoreVirtualPath = [string]
-	Gateway = [string]
+    Gateway = [string]
     [ SiteId = [UInt16] ]
     [ DefaultGateway = [bool] ]
-	[ UseFullVpn = [bool] ]
+    [ UseFullVpn = [bool] ]
     [ Ensure = [string] { Absent | Present } ]
 }
 ```
