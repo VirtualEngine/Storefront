@@ -34,7 +34,6 @@ Task Test {
         Path = "$basePath\Tests";
         OutputFile = "$releasePath\TestResult.xml";
         OutputFormat = 'NUnitXml';
-        Strict = $true;
         PassThru = $true;
         Verbose = $false;
     }
