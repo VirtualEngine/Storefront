@@ -1,0 +1,12 @@
+
+[ClassVersion("1.0.0"), FriendlyName("SFStoreRegisterGateway")]
+class VE_SFStoreRegisterGateway : OMI_BaseResource
+{
+    [Key, Description("Citrix Storefront Authentication Service IIS Virtual Path")] String StoreVirtualPath;
+    [Write, Description("Citrix Storefront Authentication Service IIS Site Id")] UInt16 SiteId;
+    [Required, Description("Citrix Storefront Netscaler Gateway")] String Gateway;
+    [Write, Description("Use this Gateway as the default if more than one is associated to the Citrix Storefront Store")] Boolean DefaultGateway;
+    [Write, Description("Use full VPN access when accessing the Citrix Storefront Store through this Gateway")] Boolean UseFullVpn;
+    [Write, ValueMap{"Present", "Absent"}, Values{"Present", "Absent"}] String Ensure;
+    
+};
